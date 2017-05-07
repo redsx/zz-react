@@ -1,3 +1,5 @@
+import ReactMount from './ReactMount';
+
 const singleTag = {
     area: true,
     base: true,
@@ -28,10 +30,9 @@ const singleTag = {
     stopOpacity: 'stop-opacity'
 };
 
-class ReactDOMComponent {
+class ReactDOMComponent extends ReactMount {
     constructor(element){
-        console.log(element);
-        this._element = element;
+        super(element);
     }
     mountComponent() {
         const type = this._element.type,
@@ -43,6 +44,7 @@ class ReactDOMComponent {
             _tageClose
         );
     }
+
     _createStyle(style) {
         const reg = /[A-Z]/g;
         let styleStr = '';
@@ -79,16 +81,16 @@ class ReactDOMComponent {
     _createContentMarkup() {
         // 今天暂定这样吧
         let children = this._element.props.children,
-            childrenString = '';
+            childrenMarkup = '';
         children =  Array.isArray(children) ? children : [children];
         children.forEach((ele) => {
             if(typeof ele === 'string') {
-                childrenString += ele;
+                childrenMarkup += ele;
             } else {
-                childrenString += (new ReactDOMComponent(ele)).mountComponent();
+                childrenMarkup += (new ReactDOMComponent(ele)).mountComponent();
             }
         });
-        return childrenString;
+        return childrenMarkup;
     }
 }
 export default ReactDOMComponent;
