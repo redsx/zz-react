@@ -9,14 +9,13 @@ export default class ReactMount {
         console.log(i);
         if(i === -1){
             childNodes.every((child,index) => {
-                const children = child.props.children;
-                if(!children || !children.length){
-                    return false;
-                }
-                const tmp = this.findNodePath(node, children);
-                if(tmp) {
-                    path = tmp.concat(index);
-                    return false;
+                const children = child.props && child.props.children;
+                if(children && children.length){
+                    const tmp = this.findNodePath(node, children);
+                    if(tmp) {
+                        path = [index].concat(tmp);
+                        return false;
+                    }
                 }
                 return true;
             })
@@ -32,8 +31,7 @@ export default class ReactMount {
         if(!indexes) {
             return console.error('')
         }
-        let element = container.childNodes[0];
-        console.log(indexes);
+        let element = container;
         indexes.forEach((index) => {
             element = element.childNodes[index];
         });

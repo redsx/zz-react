@@ -28,7 +28,8 @@ const singleTag = {
     strokeWidth: 'stroke-width',
     stopColor: 'stop-color',
     stopOpacity: 'stop-opacity'
-};
+}
+, STYLE = 'style';
 
 class ReactDOMComponent extends ReactMount {
     constructor(element){
@@ -44,7 +45,37 @@ class ReactDOMComponent extends ReactMount {
             _tageClose
         );
     }
-
+    receiveComponent(nextProps) {
+        this._updateDOMProperties(nextProps);
+        this._updateDOMChildren(nextProps);
+    }
+    _updateDOMProperties(nextProps) {
+        const lastProps = this._element.props;
+        for(const propKey in lastProps){
+            if (nextProps.hasOwnProperty(propKey) ||
+                !preProps.hasOwnProperty(propKey)) {
+                continue;
+            }
+            // const node = this.getNode();
+            // node.removeAttr(propKey);            
+        }
+        for(const propKey in lastProps) {
+            const lastProp = lastProps[propKey];
+            const nextProp = nextProps[propKey];
+            if(!nextProps.hasOwnProperty(propKey) || lastProp === nextProp){
+                continue;
+            }
+            if(propKey === STYLE){
+                //...
+            };
+            // const node = this.getNode();
+            // node.addAttr();            
+        }
+    }
+    _updateDOMChildren() {
+        // 进行diff
+        // patch
+    }
     _createStyle(style) {
         const reg = /[A-Z]/g;
         let styleStr = '';
@@ -85,7 +116,7 @@ class ReactDOMComponent extends ReactMount {
         children =  Array.isArray(children) ? children : [children];
         children.forEach((ele) => {
             if(typeof ele === 'string') {
-                childrenMarkup += ele;
+                childrenMarkup += '<span>'+ele+'</span>';
             } else {
                 childrenMarkup += (new ReactDOMComponent(ele)).mountComponent();
             }

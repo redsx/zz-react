@@ -21,8 +21,8 @@ export default {
         const reactDom = new ReactDOMComponent(component)
         const markup = reactDom.mountComponent();
         container.innerHTML = markup;
-        const vd = component.props.children[1];
-        console.log(vd);
+        const vd = component.props.children[0];
+        console.log('vd: ',vd);
         console.log(reactDom.getNode(vd,container,component));
     }
 }

@@ -19,11 +19,19 @@
 
 import react from './React';
 
+
+const div3 = react.createElement(
+    'div',
+    null,
+    'div3',
+    'div3 text'
+)
 const div2 = react.createElement(
     'div',
     null,
     'div2',
-    'div2 text'
+    'div2 text',
+    div3
 )
 const div1 = react.createElement(
     'div',
@@ -38,6 +46,7 @@ const div1 = react.createElement(
     'div1',
     div2
 )
+
 
 react.render(
     div1,
